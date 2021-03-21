@@ -1,0 +1,168 @@
+gsap.registerPlugin(ScrollTrigger);
+const scroller = new LocomotiveScroll({
+    el: document.querySelector('[data-scroll-container]'),
+    smooth: true,
+    getDirection: true,
+    tablet: { smooth: false },
+    smartphone: { smooth: false },
+  });
+
+
+ScrollTrigger.scrollerProxy(
+'.container', {
+    scrollTop(value) {
+        return arguments.length ?
+        scroller.scrollTo(value, 0, 0) :
+        scroller.scroll.instance.scroll.y
+    },
+    getBoundingClientRect() {
+        return {
+            left: 0, top: 0, 
+            width: window.innerWidth,
+            height: window.innerHeight
+        }
+}})
+  
+
+
+
+var toggleBtn = document.querySelector(".toggle");
+var tl = new TimelineMax({paused:true});
+window.onload = function() {}
+var timeline = new TimelineLite();
+
+  tl.to(".container",  {
+      overflow: "hidden"
+  }, 0.2);
+  
+  tl.to("nav",  {
+      left: "0",
+      duration: 1.5,
+      ease: "elastic.out(1, 1)"
+  }, 0.1);
+
+  tl.to(".cta-1 span:nth-child(1)",  {
+      backgroundColor: "#fa000096",
+      rotate: "90deg",
+      ease: "elastic.out(1, 1)"
+  }, 0.1);
+
+
+  tl.from("nav ul li", {
+      x: -300,
+      opacity: 0,
+      stagger: .1
+  }, 0.5);
+
+tl.reverse();
+toggleBtn.onclick = function(){
+    tl.reversed(!tl.reversed());
+};
+
+
+  
+
+
+    ScrollTrigger.create({
+        trigger: '.h1',
+        scroller: '.container',
+        start: 'top center',
+        end: 'bottom top',
+      animation: 
+      gsap.to('.big-cover-blog', {
+        height: 200
+        
+      }),
+        scrub: 2,
+      })
+    ScrollTrigger.create({
+        trigger: '.h1',
+        scroller: '.container',
+        pin: "h1",
+        start: 'top center',
+        end: 'bottom -1000',
+    
+        scrub: 2,
+      })
+
+      gsap.utils.toArray(".box").forEach(box => {
+        let title = box.querySelector(".box-title"),
+            text = box.querySelector(".box-text"),
+            background = box.querySelector(".box-content"),
+            tl = gsap.timeline({ paused: true });
+        
+        tl.to(title, { 
+          yPercent: -150 
+        },0.3)
+          .to(text, { yPercent: -100, 
+             }, 0.4)
+      
+          .to(background, { 
+            height: "100%",
+            duration: 0.1,
+            backgroundColor: "rgba(37, 37, 37, 0.5)"
+           }, 0)
+          .to(background, { 
+            backgroundColor: "rgba(0, 0, 255, 0.8)"
+           }, 0.2)
+          .to(background, { 
+            backgroundColor: "rgba(255, 0, 0, 0.8)"
+           }, 2)
+          .to(background, { 
+            backdropFilter: "blur(3px)",
+           }, 0.2);
+        
+        
+        box.addEventListener("mouseenter", () => tl.play() );
+        box.addEventListener("mouseleave", () => tl.reverse() );
+      });
+      
+
+
+
+    
+   
+
+    ScrollTrigger.create({
+        trigger: '.section-7 ',
+        scroller: '.container',
+        start: 'top 500%',
+        end: 'bottom -100%',
+      animation: 
+      gsap.to('.rotating-outer-container svg', {
+        fill: "blue",
+        rotate: "1000deg"
+        
+      }),
+        scrub: 5,
+      })
+      ScrollTrigger.create({
+        trigger: '.section-7 ',
+        scroller: '.container',
+        start: 'top 1000%',
+        end: 'bottom -300%',
+      animation: 
+      gsap.to('.cta-1 span:nth-child(1)', {
+        fill: "blue",
+        rotate: "-3000deg"
+        
+      }),
+        scrub: true,
+      })
+
+      const tm = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".surgalt-sec-1",
+            // markers: true,
+          
+            scroller: ".container",
+            pin: "#surgalt",
+            start: "top 40%",
+            end: "bottom bottom",
+            
+          
+        },
+        scrub:2,
+          });
+          
+          

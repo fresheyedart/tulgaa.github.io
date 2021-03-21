@@ -1,0 +1,206 @@
+gsap.registerPlugin(ScrollTrigger);
+
+
+const scroller = new LocomotiveScroll({
+  el: document.querySelector('[data-scroll-container]'),
+  smooth: true,
+  tablet: { smooth: false },
+  smartphone: { smooth: false },
+});
+
+// var prevScrollpos = document.querySelector('[data-scroll-container]');
+// LocomotiveScroll = function() {
+// var currentScrollPos = window.pageYOffset;
+//   if (prevScrollpos > currentScrollPos) {
+//     document.getElementById("navbar").style.top = "0";
+//   } else {
+//     document.getElementById("navbar").style.top = "-50px";
+//   }
+//   prevScrollpos = currentScrollPos;
+// }
+
+ScrollTrigger.matchMedia({
+	
+  // desktop
+  "(min-width: 800px)": function() {
+
+    scroller.on('scroll', ScrollTrigger.update)
+
+ScrollTrigger.scrollerProxy(
+  '.container', {
+      scrollTop(value) {
+          return arguments.length ?
+          scroller.scrollTo(value, 0, 0) :
+          scroller.scroll.instance.scroll.y
+      },
+      getBoundingClientRect() {
+          return {
+              left: 0, top: 0, 
+              width: window.innerWidth,
+              height: window.innerHeight
+          }
+      }
+  }
+)
+
+
+ScrollTrigger.create({
+  trigger: '.image-mask',
+  scroller: '.container',
+  start: 'top+=10% 50%',
+  end: 'bottom-=40% 50%',
+  animation: gsap.to('.image-mask', {backgroundSize: '110%'}),
+  scrub: 2,
+  // markers: true
+})
+ScrollTrigger.create({
+  trigger: '.box',
+  scroller: '.container',
+  start: 'top+=0% 50%',
+  end: 'bottom-=20% 50%',
+  animation: gsap.to('.box', {
+    duration: '2',
+    y: -100, yoyo:true, ease: Linear.easeNone}),
+  scrub: 2,
+  // markers: true
+})
+
+
+ScrollTrigger.addEventListener('refresh', () => scroller.update())
+
+
+ScrollTrigger.refresh()
+// gsap.from(".top", { x: 200, duration: 1});
+gsap.from(".background", { x: 200, duration: 1});
+gsap.from(".shortcut-row", { y: 0, duration: 1});
+
+
+    // setup animations and ScrollTriggers for screens 800px wide or greater (desktop) here...
+    // These ScrollTriggers will be reverted/killed when the media query doesn't match anymore.
+  },}); 
+
+
+
+
+
+
+
+
+// gsap.from(".scroll-1", {
+//   scrollTrigger: {
+//       trigger: ".scroll-1",
+//       start: "top center",
+//         // end: "+=500",
+//       ease: "slow(0.7, 0.7, false)",
+//       toggleActions: "restart restart restart restart"
+//   },
+//   opacity: 0, duration: 3});
+
+
+
+// menu
+var toggleBtn = document.querySelector(".toggle");
+    var tl = new TimelineMax({paused:true});
+    
+    window.onload = function() {
+
+        tl.to(".background", .5,  {
+            // rotate: 45,
+            // top: 510,
+            duration: 0.2
+        }, 0 );
+    
+    } 
+
+    var timeline = new TimelineLite();
+
+timeline
+	.from(".background", 1, {
+		opacity: "0",
+		ease: Power4.easeIn,
+		delay: "0.5"
+	} , 0.2)
+	.to("#box2", 2, {
+		width: "0",
+		ease: Power3.easeOut,
+		delay: "0"
+	})
+	timeline.to(".open-1", 1, {
+		width: "0",
+        duration: 2,
+		ease: Power1.easeOut,
+		delay: "0.5",
+        x: "-100%"
+	}, 0.1)
+	timeline.to(".open-2", 1, {
+		width: "0",
+        duration: 2,
+		ease: Power1.easeOut,
+		delay: "0.5",
+        x: "100%"
+	} , 0.1)
+
+
+    tl.to("body",  {
+        overflow: "hidden"
+     }, 0.2);
+     
+    tl.to("svg",  {
+        fill: "black"
+     }, 0.2);
+
+
+    tl.to(".toggle span:nth-child(1)", .5,  {
+        // rotate: -90,
+        // top: 10,
+        duration: 0.9,
+        ease: "elastic.out(1, 0.3)",
+        width: 25,
+        height: 25,
+        right: 7,
+        top: 7,
+        pin: true,
+        start: 'top top',
+        borderRadius: 5,
+        pinSpacing: false,
+        padding: 5,
+        boxShadow:'0 0 0 2px rgb(29, 29, 29)',
+        // borderRadius: 50,
+        backgroundColor: "white"
+        
+        
+    }, 0.1 );
+    tl.to(".toggle span:nth-child(2)", .5,  {
+        rotate: 45,
+        top: 10,
+        duration: 0.2
+    }, 0 );
+    
+    tl.to("nav",  {
+        left: "0",
+        duration: 1.5,
+        ease: "elastic.out(1, 1)"
+    }, 0.1);
+
+   
+    
+    tl.from("nav ul li", {
+        x: -300,
+        opacity: 0,
+        stagger: .1
+    }, 0.5);
+    
+    
+    
+    tl.reverse();
+    toggleBtn.onclick = function(){
+        tl.reversed(!tl.reversed());
+    };
+
+
+
+
+
+
+
+
